@@ -12,3 +12,5 @@ pub fn new_connection(id: u8) -> Connection	{
 		node_connections: Vec::new(),
 	}
 }
+
+pub fn add_node(node: Node)
