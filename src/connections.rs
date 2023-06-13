@@ -12,5 +12,8 @@ pub fn new_connection(id: u8) -> Connection	{
 		node_connections: Vec::new(),
 	}
 }
-
-pub fn add_node(node: Node)
+impl Connection {
+    pub fn add_node(&mut self, node: Node)  {
+        self.node_connections.push(node);
+    }
+}
