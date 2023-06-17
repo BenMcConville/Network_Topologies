@@ -53,18 +53,44 @@ fn main()	{
 }
 
 fn run_op(mat: &mut Vec<connections::Connection>, n: u8)    {
-    println!("You Picked {}", n);
     match n {
         0 => print!("{esc}[2J{esc}[1;1H", esc = 27 as char),
-        1 => node_to_line(),
+        1 => node_to_line(mat),
         2 => line_to_network(mat),
         3 => Display_AdjM(mat),
         _ => println!("Non Valid Response")
     }
 }
 
-fn node_to_line()   {
-        
+fn node_to_line(mat: &mut Vec<connections::Connection>)   {
+            //Update to better input method
+    let mut id_sel = String::new();
+    println!("Enter connetion line Id");
+    io::stdin().read_line(&mut id_sel).expect("NVI__");
+    let id_sel: u8 = match id_sel.trim().parse() {
+            Ok(num) => {
+                num
+            },
+            Err(_) => {
+               255 
+            },
+    };
+    for elem in mat {
+        if elem.name_id == id_sel   {
+            println!("Please enter node ID");
+            let mut node_id = String::new();
+            io::stdin().read_line(&mut node_id).expect("NVI__");
+            let node_id: u8 = match node_id.trim().parse() {
+                Ok(num) => {
+                    num
+                },
+                Err(_) => {
+                    255 
+                },
+            };
+            elem.add_node(node::new_node(node_id));
+        }
+    }
 }
 
 fn line_to_network(mat: &mut Vec<connections::Connection>)    {
@@ -80,19 +106,15 @@ fn line_to_network(mat: &mut Vec<connections::Connection>)    {
             },
     };
     mat.push(connections::new_connection(id));
-    
-    println!("{:?}", &mat);
-
 }
 
 
 fn Display_AdjM(mat: &Vec<connections::Connection>) {
-    println!("{:?}", mat);
     for line in mat  {
-        println!("{}: ", line.name_id);
+        print!("\n {}: ", line.name_id);
         for elem in &line.node_connections {
-            print!("{}", elem.name_id);
+            print!("{}, ", elem.name_id);
         }
-        println!("");
     }
+    println!("");
 }
