@@ -32,7 +32,7 @@ fn main()	{
         io::stdin().read_line(&mut userIn).expect("NVI__");
         let userIn: u8 = match userIn.trim().parse() {
             Ok(num) => {
-                run_op(num);
+                run_op(&mut network, num);
                 num
             },
             Err(_) => {
@@ -52,17 +52,44 @@ fn main()	{
     //Display_AdjM(&network);
 }
 
-fn run_op(n: u8)    {
+fn run_op(mat: &mut Vec<connections::Connection>, n: u8)    {
     println!("You Picked {}", n);
     match n {
         0 => print!("{esc}[2J{esc}[1;1H", esc = 27 as char),
-        1 => println!("1"),
+        1 => node_to_line(),
+        2 => line_to_network(mat),
+        3 => Display_AdjM(mat),
         _ => println!("Non Valid Response")
     }
 }
 
+fn node_to_line()   {
+        
+}
+
+fn line_to_network(mat: &mut Vec<connections::Connection>)    {
+    println!("Enter Id or nothing to auto assign Id"); 
+    let mut id = String::new();
+    io::stdin().read_line(&mut id).expect("NVI__");
+    let id: u8 = match id.trim().parse() {
+            Ok(num) => {
+                num
+            },
+            Err(_) => {
+               255 
+            },
+    };
+    mat.push(connections::new_connection(id));
+    
+    println!("{:?}", &mat);
+
+}
+
+
 fn Display_AdjM(mat: &Vec<connections::Connection>) {
+    println!("{:?}", mat);
     for line in mat  {
+        println!("{}: ", line.name_id);
         for elem in &line.node_connections {
             print!("{}", elem.name_id);
         }

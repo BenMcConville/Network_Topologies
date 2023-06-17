@@ -2,7 +2,7 @@ use super::node::Node;
 
 #[derive(Debug)]
 pub struct Connection	{
-	name_id: u8,
+	pub name_id: u8, //possibly private in future
 	pub node_connections: Vec<Node>, 
 }
 
