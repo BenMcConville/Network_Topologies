@@ -105,7 +105,9 @@ fn line_to_network(mat: &mut Vec<connections::Connection>)    {
                255 
             },
     };
-    mat.push(connections::new_connection(id));
+    if check_for_existing_connection(mat, id)   {
+        mat.push(connections::new_connection(id));
+    }
 }
 
 
@@ -117,4 +119,13 @@ fn Display_AdjM(mat: &Vec<connections::Connection>) {
         }
     }
     println!("");
+}
+
+fn check_for_existing_connection(vec: &Vec<connections::Connection>, node: u8) -> bool {//Use Generic
+    for elem in vec  {
+        if elem.name_id == node {
+            return false;
+        }
+    }
+    return true;
 }
