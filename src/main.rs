@@ -60,6 +60,9 @@ fn run_op(mat: &mut Vec<connections::Connection>, n: u8)    {
         3 => Display_AdjM(mat),
         _ => println!("Non Valid Response")
     }
+    for line in mat {
+        line.cycle();
+    }
 }
 
 fn node_to_line(mat: &mut Vec<connections::Connection>)   {
@@ -115,7 +118,7 @@ fn Display_AdjM(mat: &Vec<connections::Connection>) {
     for line in mat  {
         print!("\n {}: ", line.name_id);
         for elem in &line.node_connections {
-            print!("{}, ", elem.name_id);
+            print!("{}: ({}), ", elem.name_id, elem.relay);
         }
     }
     println!("");
