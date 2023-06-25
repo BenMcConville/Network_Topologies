@@ -3,7 +3,7 @@ use super::node::Node;
 #[derive(Debug)]
 pub struct Connection	{
 	pub name_id: u8, //possibly private in future
-	pub node_connections: Vec<Node>, 
+	pub node_connections: Vec<u8>, 
 }
 
 pub fn new_connection(id: u8) -> Connection	{
@@ -12,6 +12,7 @@ pub fn new_connection(id: u8) -> Connection	{
 		node_connections: Vec::new(),
 	}
 }
+/*
 impl Connection {
     pub fn add_node(&mut self, node: Node)  {
         self.node_connections.push(node);
@@ -33,4 +34,4 @@ impl Connection {
         }
     }
 }
-
+*/

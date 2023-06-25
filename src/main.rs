@@ -1,4 +1,5 @@
 use std::io;
+pub use std::collections::HashMap;
 /*##########################
 ##   Network Topologies   ##
 ##########################*/
@@ -13,9 +14,9 @@ use std::io;
 
 /*	Structs
 ##########################*/
-
 pub mod node;
 pub mod connections;
+pub mod network;
 //use super::node;
 
 /* Ring 
@@ -28,8 +29,23 @@ pub mod connections;
 51 0 0 0 0 0   
 */
 
+pub fn input_parsing(prompt: &str) -> Option<u8>   {
+    println!("{}: ", prompt);
+    let mut userIn = String::new();
+    io::stdin().read_line(&mut userIn).expect("NVI__");
+    match userIn.trim().parse()    {
+        Ok(num) => {
+            Some(num)
+        }
+        Err(_) =>   {
+            None
+        }
+    }
+}
+
+
 fn main()	{
-	
+    /*	
     let mut network: Vec<connections::Connection> = Vec::new();
 	let mut run = true;
     print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
@@ -49,7 +65,6 @@ fn main()	{
         };
     }
     println!("Enter a valid input");
-    /*
     let n = node::new_node(3);
 	let mut m = connections::new_connection(3);
     let q = node::new_node(2);
@@ -58,12 +73,12 @@ fn main()	{
 	//println!("{:#?}", network);
     //Display_AdjM(&network);
 }
-
+/*
 fn run_op(mat: &mut Vec<connections::Connection>, n: u8)    {
     match n {
         0 => print!("{esc}[2J{esc}[1;1H", esc = 27 as char),
-        1 => node_to_line(mat),
-        2 => line_to_network(mat),
+        1 => node_to_line(mat),    //Updated
+        2 => line_to_network(mat), //Updated
         3 => Display_AdjM(mat),
         4 => Send_Signal(mat),
         _ => println!("Non Valid Response")
@@ -72,7 +87,6 @@ fn run_op(mat: &mut Vec<connections::Connection>, n: u8)    {
         line.cycle();
     }
 }
-
 fn Send_Signal(mat : &mut Vec<connections::Connection>) {
     let mut line_id = String::new();
     println!("Enter Signal Line Source");
@@ -138,7 +152,7 @@ fn node_to_line(mat: &mut Vec<connections::Connection>)   {
     }
 }
 
-fn line_to_network(mat: &mut Vec<connections::Connection>)    {
+fn line_to_network(mat: &mut Vec<connections::Connection>)    { 
     println!("Enter Id or nothing to auto assign Id"); 
     let mut id = String::new();
     io::stdin().read_line(&mut id).expect("NVI__");
@@ -174,3 +188,6 @@ fn check_for_existing_connection(vec: &Vec<connections::Connection>, node: u8) -
     }
     return true;
 }
+*/
+
+
