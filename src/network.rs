@@ -19,9 +19,11 @@ impl Network    {
                         self.connections.insert(con_id, {
                             let cons = self.connections.entry(con_id);
                             *cons.push(node_id)
-                    }),
+                            }
+                        )},
                     None => (),
-                },
+                }
+            },
             None => (),
         }
     }
