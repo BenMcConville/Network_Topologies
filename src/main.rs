@@ -30,10 +30,10 @@ pub mod network;
 */
 
 pub fn input_parsing(prompt: &str) -> Option<u8>   {
-    println!("{}: ", prompt);
-    let mut userIn = String::new();
-    io::stdin().read_line(&mut userIn).expect("NVI__");
-    match userIn.trim().parse()    {
+    println!("{} ", prompt);
+    let mut user_in = String::new();
+    io::stdin().read_line(&mut user_in).expect("NVI__");
+    match user_in.trim().parse()    {
         Ok(num) => {
             Some(num)
         }
@@ -45,33 +45,23 @@ pub fn input_parsing(prompt: &str) -> Option<u8>   {
 
 
 fn main()	{
-    /*	
-    let mut network: Vec<connections::Connection> = Vec::new();
-	let mut run = true;
     print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
+    let mut net = network::new_network(0);
+    let mut run = true;
+    //net.create_connection();
+    //net.create_node();
+    //net.Display_Network();
     while run   {
-        println!("Select an option: \n1- Add node to line\n2- Create Line\n3- View network\n4- Send Signal");
-        let mut userIn = String::new();
-        io::stdin().read_line(&mut userIn).expect("NVI__");
-        let userIn: u8 = match userIn.trim().parse() {
-            Ok(num) => {
-                run_op(&mut network, num);
-                num
-            },
-            Err(_) => {
-                run = false;
-                continue
-            },
-        };
+        match input_parsing("Select an option: \n1- Add node to line\n2- Create Line\n3- View network\n4- Send Signal\n")    {
+            Some(0) => print!("{esc}[2J{esc}[1;1H", esc = 27 as char),
+            Some(1) => net.create_node(),  
+            Some(2) => net.create_connection(),
+            Some(3) => net.Display_Network(),
+            //4 => Send_Signal(mat),
+            _ => println!("Non Valid Response")
+            
+        } 
     }
-    println!("Enter a valid input");
-    let n = node::new_node(3);
-	let mut m = connections::new_connection(3);
-    let q = node::new_node(2);
-    m.add_node(q);
-    network.push(m);*/
-	//println!("{:#?}", network);
-    //Display_AdjM(&network);
 }
 /*
 fn run_op(mat: &mut Vec<connections::Connection>, n: u8)    {
@@ -121,64 +111,6 @@ fn Send_Signal(mat : &mut Vec<connections::Connection>) {
     }
 }
 
-fn node_to_line(mat: &mut Vec<connections::Connection>)   {
-            //Update to better input method
-    let mut id_sel = String::new();
-    println!("Enter connetion line Id");
-    io::stdin().read_line(&mut id_sel).expect("NVI__");
-    let id_sel: u8 = match id_sel.trim().parse() {
-            Ok(num) => {
-                num
-            },
-            Err(_) => {
-               255 
-            },
-    };
-    for elem in mat {
-        if elem.name_id == id_sel   {
-            println!("Please enter node ID");
-            let mut node_id = String::new();
-            io::stdin().read_line(&mut node_id).expect("NVI__");
-            let node_id: u8 = match node_id.trim().parse() {
-                Ok(num) => {
-                    num
-                },
-                Err(_) => {
-                    255 
-                },
-            };
-            elem.add_node(node::new_node(node_id));
-        }
-    }
-}
-
-fn line_to_network(mat: &mut Vec<connections::Connection>)    { 
-    println!("Enter Id or nothing to auto assign Id"); 
-    let mut id = String::new();
-    io::stdin().read_line(&mut id).expect("NVI__");
-    let id: u8 = match id.trim().parse() {
-            Ok(num) => {
-                num
-            },
-            Err(_) => {
-               255 
-            },
-    };
-    if check_for_existing_connection(mat, id)   {
-        mat.push(connections::new_connection(id));
-    }
-}
-
-
-fn Display_AdjM(mat: &Vec<connections::Connection>) {
-    for line in mat  {
-        print!("\n {}: ", line.name_id);
-        for elem in &line.node_connections {
-            print!("{}: ({}), ", elem.name_id, elem.relay);
-        }
-    }
-    println!("");
-}
 
 fn check_for_existing_connection(vec: &Vec<connections::Connection>, node: u8) -> bool {//Use Generic
     for elem in vec  {
